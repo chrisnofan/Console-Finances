@@ -86,3 +86,58 @@ var finances = [
 ['Jan-2017', 138230],
 ['Feb-2017', 671099]
 ];
+
+//extract the date column
+var date = finances.map(d => d[0]);
+//console.log(date);
+
+var numberOfMonths = date.length
+//console.log(numberOfMonths);
+
+//extract the values column
+var prices = finances.map(d => d[1]);
+//console.log(prices);
+
+//find the total amount of profit/Losses over the entire period
+var totalAmount = 0;
+for (var i = 0; i < prices.length; i++){
+    totalAmount = totalAmount + prices[i];
+}
+
+//finding the average of prices changes using reduce method
+var averageOfChanges = prices.reduce((accVal, curVal) => accVal + curVal, 0)/finances.length;
+
+var maxMonth = {
+    monthName: '',
+    profit: 0,
+  };
+  
+  var minMonth = {
+    monthName: '',
+    profit: 0,
+  };
+  
+  //looping through finances array to determin the maximum profit and corresponding month
+  finances.forEach((month) => {
+    if (month[1] > maxMonth.profit) {
+      maxMonth.monthName = month[0];
+      maxMonth.profit = month[1];
+    }
+  //determin the least profit or greatest loss and corresponding month
+    if (month[1] < minMonth.profit) {
+      minMonth.monthName = month[0];
+      minMonth.profit = month[1];
+    }
+  
+  });
+
+
+//displaying console output
+console.log("Financial Analysis");
+console.log("--------------------------");
+console.log("Total Months: " + numberOfMonths);
+console.log("Total: $" + totalAmount);
+//display average changes to the nearest 100th
+console.log("Average Change: $" + averageOfChanges.toFixed(2));
+console.log("Greatest Increase in Profits: " + maxMonth.monthName + " ($" + maxMonth.profit + ")");
+console.log("Greatest Decrease in Profits: " + minMonth.monthName + " ($" + minMonth.profit + ")");
